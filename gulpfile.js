@@ -18,15 +18,15 @@ gulp.task('nodemon', function() {
 gulp.task('watch', function() {
   // gulp's built in watch function
   gulp.watch(
-    ['*.js', 'views/*.html', 'test/*.js'], //blurbs of files to watch
+    ['app.js', '*/*.{html,js}'], //blurbs of files to watch
     ['mocha'] //tasks to run when the above files change
   );
 });
 
 gulp.task('mocha', function() {
   process.env.PORT = 4001;
-  // return is important here... TODO why?
-  return gulp.src(['test/*js'])
+  // return is important here... http://stackoverflow.com/a/21700789
+  return gulp.src(['test/*.js'])
     .pipe(mocha({reporter: 'nyan'})); // nyan reporter is dope lol
 })
 

@@ -19,7 +19,7 @@ router
     yield this.render('hello')
   })
   .get('/about', function *(next) {
-    yield this.render('about')
+    this.body = "<!DOCTYPE html><head><title>About</title></head><body>About Us</body></html>";
   });
 app
   .use(router.routes())

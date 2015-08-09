@@ -1,6 +1,6 @@
 'use strict';
 
-const app = require('../app').listen();
+const app = require('../../app').listen();
 // supertest allows us to make request to our endpoints and test the response
 const request = require('supertest');
 // chai is our assert library, it has helpful assert functions such as expect

@@ -27,6 +27,13 @@ router
   })
   .get('/react', function *(next) {
     yield this.render('react')
+  })
+  .get('/json', function *(next) {
+    this.body = {
+      name: 'brett',
+      number: 83,
+      isProgrammer: true
+    };
   });
 app
   .use(router.routes())

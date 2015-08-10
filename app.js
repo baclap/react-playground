@@ -11,7 +11,7 @@ const app = koa();
 app.use(logger());
 app.use(views('app/views'));
 
-// koa-static used to serve static assets in static directory
+// koa-static used to serve static assets in assets directory
 app.use(serve('app/assets'));
 
 // response

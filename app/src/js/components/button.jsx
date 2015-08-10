@@ -1,11 +1,11 @@
 'use strict';
 
-const React = require('react');
+const { React, Base } = require('./base');
 
-class Button extends React.Component {
+class Button extends Base {
   constructor(props) {
     super(props);
-    this.state = {greeting: 'Hello World!'};
+    this.state = {greeting: 'hello world'};
   }
   handleClick(e) {
     e.preventDefault();
@@ -13,7 +13,7 @@ class Button extends React.Component {
   }
   render() {
     return (
-      <button onClick={this.handleClick.bind(this)}>Greet</button>
+      <button onClick={this.handleClick}>Greet</button>
     )
   }
 }

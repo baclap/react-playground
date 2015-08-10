@@ -42,17 +42,28 @@ gulp.task('test-once', function() {
   gulp.tasks.mocha.fn().pipe(exit());
 });
 
+// one-off browserify task which is handy when debugging
+// node --harmony `which gulp` browserify
+gulp.task('browserify', function() {
+  const b = getBrowserifyInstance();
+  bundleBrowserify(b);
+  console.log('browserify bundle updated');
+})
+
 // update bundle.js when changes detected in client-side js/jsx
 gulp.task('watchify', function() {
-  // compile function receives a browserify instance and bundles it
-  const compile = function(b) {
-    b
-      .transform(babelify)
-      .bundle()
-      .pipe(source('bundle.js'))
-      .pipe(gulp.dest('app/assets/js'));
-  };
+  // create watchify instance wrapping our browserify instance
+  // re-run compile whenever watchify emits an update event
+  const b = getBrowserifyInstance();
+  const w = watchify(b);
+  bundleBrowserify(w);
+  w.on('update', function() {
+    bundleBrowserify(w);
+    console.log('browserify bundle updated');
+  });
+});
 
+const getBrowserifyInstance = function() {
   // create browserify instance
   const b = browserify('app/src/js/app.jsx', {
     debug: true,
@@ -62,16 +73,18 @@ gulp.task('watchify', function() {
     cache: {},
     packageCache: {}
   });
-  compile(b);
 
-  // create watchify instance wrapping our browserify instance
-  // re-run compile whenever watchify emits an update event
-  const w = watchify(b);
-  w.on('update', function() {
-    compile(w);
-    console.log('browserify bundle updated');
-  });
-});
+  return b;
+}
+
+// receives a browserify instance and bundles it
+const bundleBrowserify = function(b) {
+  b
+    .transform(babelify)
+    .bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest('app/assets/js'));
+};
 
 // running gulp (or in our ES6 case, node --harmony `which gulp`) will run the
 // task in this array

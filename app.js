@@ -43,7 +43,7 @@ module.exports = app;
 
 // start app if it isn't being required into another module
 if (!module.parent) {
-  const port = process.env.PORT;
-  app.listen(port);
+  const port = process.env.PORT || 9999;
+  app.listen(port); 
   console.log('Listening on port ' + port);
 }

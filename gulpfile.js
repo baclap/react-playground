@@ -22,7 +22,7 @@ gulp.task('nodemon', function() {
 gulp.task('watch', function() {
   // gulp's built in watch function
   gulp.watch(
-    ['**/*.{html,js}'], // blurbs of files to watch
+    ['**/*.{html,js}', "!./node_modules"], // blurbs of files to watch
     ['mocha'] // tasks to run when the above files change
   );
 });

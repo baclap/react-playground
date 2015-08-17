@@ -14,7 +14,6 @@ const source = require('vinyl-source-stream');
 gulp.task('nodemon', function() {
   nodemon({
     script: 'app.js',
-    env: {PORT: 4000},
     nodeArgs: ['--harmony']
   }).on('restart');
 });
@@ -23,14 +22,14 @@ gulp.task('nodemon', function() {
 gulp.task('watch', function() {
   // gulp's built in watch function
   gulp.watch(
-    ['**/*.{html,js}'], // blurbs of files to watch
+    ['**/*.{html,js,jsx}', '!node_modules/**'], // blurbs of files to watch
     ['mocha'] // tasks to run when the above files change
   );
 });
 
 // run mocha test in the test directory
 gulp.task('mocha', function() {
-  process.env.PORT = 4001;
+  //process.env.PORT = 4001;
   // return is important here... http://stackoverflow.com/a/21700789
   return gulp.src(['app/test/*.js'])
     .pipe(mocha({reporter: 'nyan'})); // nyan reporter is dope lol

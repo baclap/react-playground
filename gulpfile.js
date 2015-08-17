@@ -80,7 +80,9 @@ const getBrowserifyInstance = function() {
 const bundleBrowserify = function(b) {
   b
     .transform(babelify)
-    .bundle()
+    .bundle(function(err){
+      if(err) console.log(err.message);
+    })
     .pipe(source('bundle.js'))
     .pipe(gulp.dest('app/assets/js'));
 };

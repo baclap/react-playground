@@ -83,7 +83,7 @@ const bundleBrowserify = function(b) {
       if(err){
         console.log(err.message);
       }else{
-	console.log('bundle done');  
+        console.log('bundle done');
       }
     })
     .pipe(source('bundle.js'))

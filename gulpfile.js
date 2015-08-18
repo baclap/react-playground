@@ -45,8 +45,7 @@ gulp.task('test-once', function() {
 // node --harmony `which gulp` browserify
 gulp.task('browserify', function() {
   const b = getBrowserifyInstance();
-  bundleBrowserify(b);
-  console.log('browserify bundle updated');
+  return bundleBrowserify(b);
 })
 
 // update bundle.js when changes detected in client-side js/jsx
@@ -57,8 +56,8 @@ gulp.task('watchify', function() {
   const w = watchify(b);
   bundleBrowserify(w);
   w.on('update', function() {
+    console.log('updating bundle');
     bundleBrowserify(w);
-    console.log('browserify bundle updated');
   });
 });
 
@@ -78,9 +77,15 @@ const getBrowserifyInstance = function() {
 
 // receives a browserify instance and bundles it
 const bundleBrowserify = function(b) {
-  b
+  return b
     .transform(babelify)
-    .bundle()
+    .bundle(function(err){
+      if(err){
+        console.log(err.message);
+      }else{
+	console.log('bundle done');  
+      }
+    })
     .pipe(source('bundle.js'))
     .pipe(gulp.dest('app/assets/js'));
 };

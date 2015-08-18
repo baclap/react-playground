@@ -3,4 +3,4 @@
 const React = require('react');
 const Button = require('./components/button');
 
-React.render(<Button />, document.querySelector('#app-container'));
+var test = React.render(<Button />, document.querySelector('#app-container'));

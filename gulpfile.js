@@ -54,11 +54,13 @@ gulp.task('watchify', function() {
   // re-run compile whenever watchify emits an update event
   const b = getBrowserifyInstance();
   const w = watchify(b);
-  bundleBrowserify(w);
+  
+  w.transform(babelify);
   w.on('update', function() {
     console.log('updating bundle');
     bundleBrowserify(w);
   });
+  bundleBrowserify(w);
 });
 
 const getBrowserifyInstance = function() {
@@ -78,7 +80,6 @@ const getBrowserifyInstance = function() {
 // receives a browserify instance and bundles it
 const bundleBrowserify = function(b) {
   return b
-    .transform(babelify)
     .bundle(function(err){
       if(err){
         console.log(err.message);

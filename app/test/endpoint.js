@@ -24,7 +24,7 @@ describe('/hello endpoint', function() {
       // supertest's end function calls callback with any potential errors as first param and the response as second
       .end(function(error, response) {
         // use chai's expect function to assert the response text is in fact hello world
-        expect(response.text).to.equal('hello world\n');
+        expect(response.text).to.equal('hello world');
         done();
       });
 

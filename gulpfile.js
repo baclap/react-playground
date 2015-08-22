@@ -9,6 +9,9 @@ const watchify = require('watchify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
 const concat = require('gulp-concat');
+const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
+const minifyCss = require('gulp-minify-css');
 
 // this not only starts the app but will also monitor for file changes and
 // restart the app when changes are detected
@@ -36,6 +39,9 @@ gulp.task('watch', function() {
 gulp.task('bundle-css', function(){
   return gulp.src('app/src/css/**/*.css')
     .pipe(concat('bundle.css'))
+    .pipe(gulp.dest('app/assets/css'))
+    .pipe(rename('bundle.min.css'))
+    .pipe(minifyCss())
     .pipe(gulp.dest('app/assets/css'));
 });
 

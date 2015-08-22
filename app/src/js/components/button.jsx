@@ -6,7 +6,7 @@ const sweetAlert = require('sweetalert');
 
 class Button extends Base {
 
-  constructor(rops) {
+  constructor(props) {
     super(props);
     this.state = {
       color: '#58C060',

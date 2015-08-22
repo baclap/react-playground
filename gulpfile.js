@@ -8,6 +8,7 @@ const browserify = require('browserify');
 const watchify = require('watchify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
@@ -107,6 +108,10 @@ const bundleBrowserify = function(b) {
       }
     })
     .pipe(source('bundle.js'))
+    .pipe(gulp.dest('app/assets/js'))
+    .pipe(rename('bundle.min.js'))
+    .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest('app/assets/js'));
 };
 

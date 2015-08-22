@@ -45,6 +45,7 @@ gulp.task('test-once', function() {
 // node --harmony `which gulp` browserify
 gulp.task('browserify', function() {
   const b = getBrowserifyInstance();
+  b.transform(babelify);
   return bundleBrowserify(b);
 })
 

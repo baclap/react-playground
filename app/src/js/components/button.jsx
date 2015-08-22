@@ -4,11 +4,10 @@ const { React, Base } = require('./base');
 const ColorPicker = require('react-color');
 const sweetAlert = require('sweetalert');
 
-module.exports = class Component extends Base {
+class Button extends Base {
 
-  constructor() {
-
-    super();
+  constructor(rops) {
+    super(props);
     this.state = {
       color: '#58C060',
       background: '#fff'
@@ -40,3 +39,5 @@ module.exports = class Component extends Base {
     );
   }
 }
+
+module.exports = Button;

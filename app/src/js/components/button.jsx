@@ -2,7 +2,7 @@
 
 const { React, Base } = require('./base');
 const ColorPicker = require('react-color');
-const sweetAlert = require('sweetalert');
+//const sweetAlert = require('sweetalert');
 
 class Button extends Base {
 
@@ -20,7 +20,7 @@ class Button extends Base {
   }
 
   submitColor(){
-    sweetAlert( this.state.color );
+//    sweetAlert( this.state.color );
     this.setState({
       background:this.state.color
     });

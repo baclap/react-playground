@@ -8,6 +8,11 @@ const browserify = require('browserify');
 const watchify = require('watchify');
 const babelify = require('babelify');
 const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const concat = require('gulp-concat');
+const rename = require('gulp-rename');
+const uglify = require('gulp-uglify');
+const minifyCss = require('gulp-minify-css');
 
 // this not only starts the app but will also monitor for file changes and
 // restart the app when changes are detected
@@ -25,6 +30,20 @@ gulp.task('watch', function() {
     ['**/*.{html,js,jsx}', '!node_modules/**'], // blurbs of files to watch
     ['mocha'] // tasks to run when the above files change
   );
+
+  //concat css
+  gulp.watch(
+    ['app/src/css/**/*.css'], ['bundle-css']
+  )
+});
+
+gulp.task('bundle-css', function(){
+  return gulp.src('app/src/css/**/*.css')
+    .pipe(concat('bundle.css'))
+    .pipe(gulp.dest('app/assets/css'))
+    .pipe(rename('bundle.min.css'))
+    .pipe(minifyCss())
+    .pipe(gulp.dest('app/assets/css'));
 });
 
 // run mocha test in the test directory
@@ -45,8 +64,8 @@ gulp.task('test-once', function() {
 // node --harmony `which gulp` browserify
 gulp.task('browserify', function() {
   const b = getBrowserifyInstance();
-  bundleBrowserify(b);
-  console.log('browserify bundle updated');
+  b.transform(babelify);
+  return bundleBrowserify(b);
 })
 
 // update bundle.js when changes detected in client-side js/jsx
@@ -55,11 +74,13 @@ gulp.task('watchify', function() {
   // re-run compile whenever watchify emits an update event
   const b = getBrowserifyInstance();
   const w = watchify(b);
-  bundleBrowserify(w);
+
+  w.transform(babelify);
   w.on('update', function() {
+    console.log('updating bundle');
     bundleBrowserify(w);
-    console.log('browserify bundle updated');
   });
+  bundleBrowserify(w);
 });
 
 const getBrowserifyInstance = function() {
@@ -78,13 +99,22 @@ const getBrowserifyInstance = function() {
 
 // receives a browserify instance and bundles it
 const bundleBrowserify = function(b) {
-  b
-    .transform(babelify)
-    .bundle()
+  return b
+    .bundle(function(err){
+      if(err){
+        console.log(err.message);
+      } else {
+        console.log('bundle done');
+      }
+    })
     .pipe(source('bundle.js'))
+    .pipe(gulp.dest('app/assets/js'))
+    .pipe(rename('bundle.min.js'))
+    .pipe(buffer())
+    .pipe(uglify())
     .pipe(gulp.dest('app/assets/js'));
 };
 
 // running gulp (or in our ES6 case, node --harmony `which gulp`) will run the
 // task in this array
-gulp.task('default', ['nodemon', 'mocha', 'watch', 'watchify']);
+gulp.task('default', ['nodemon', 'bundle-css', 'mocha', 'watch', 'watchify']);

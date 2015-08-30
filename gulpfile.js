@@ -74,7 +74,7 @@ gulp.task('watchify', function() {
   // re-run compile whenever watchify emits an update event
   const b = getBrowserifyInstance();
   const w = watchify(b);
-  
+
   w.transform(babelify);
   w.on('update', function() {
     console.log('updating bundle');
@@ -103,7 +103,7 @@ const bundleBrowserify = function(b) {
     .bundle(function(err){
       if(err){
         console.log(err.message);
-      }else{
+      } else {
         console.log('bundle done');
       }
     })

@@ -112,7 +112,9 @@ router
       this.redirect('/');
     } else {
       // user login unsuccessful
-      this.redirect('/');
+      yield this.render('login', {
+        failed: true
+      });
     }
 
   });

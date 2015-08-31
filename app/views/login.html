@@ -4,6 +4,9 @@
     <title>Login</title>
   </head>
   <body>
+    <% if (failed) { %>
+      <p style="color:red">Failed to login, try john/password or suzy/abc123</p>
+    <% } %>
     <form action="/login" method="POST">
       <p>
         <input placeholder="username" name="username"><br>

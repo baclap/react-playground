@@ -16,7 +16,7 @@
     <hr>
 
     <% if (user) { %>
-      <p>Logged in as <%= user.username %></p>
+      <p>Logged in as <strong><%= user.username %></strong>. <a href="/logout">Log Out</a></p>
     <% } else { %>
       <p>You are not logged in</p>
     <% } %>

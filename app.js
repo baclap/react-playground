@@ -81,7 +81,9 @@ router
 
   // login
   .get('/login', function *(next) {
-    yield this.render('login');
+    yield this.render('login', {
+      failed: false
+    });
   })
   .post('/login', koaBody, function *(next) {
     // submitted credentials
@@ -117,6 +119,11 @@ router
       });
     }
 
+  })
+  .get('/logout', function *(next) {
+    // unset token cookie
+    this.cookies.set('jwt', null);
+    this.redirect('/');
   });
 
 app

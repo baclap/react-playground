@@ -10,6 +10,16 @@
       <li><a href="/react">React</a></li>
       <li><a href="/react-iso">React Iso</a></li>
       <li><a href="/json">JSON</a></li>
+      <li><a href="/login">Login</a></li>
     </ul>
+
+    <hr>
+
+    <% if (user) { %>
+      <p>Logged in as <%= user.username %></p>
+    <% } else { %>
+      <p>You are not logged in</p>
+    <% } %>
+
   </body>
 </html>

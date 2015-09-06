@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "babel": "^5.8.21",
+    "co-bcrypt": "^1.0.0",
     "koa": "^0.21.0",
     "koa-body": "^1.2.1",
     "koa-jwt": "^1.1.1",

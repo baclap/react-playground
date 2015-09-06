@@ -1,23 +1,13 @@
 'use strict';
 
 // read: users "db" ;)
-const usersDB = [
-  {
-    id: 1,
-    username: 'john',
-    password: 'password'
-  },
-  {
-    id: 2,
-    username: 'suzy',
-    password: 'abc123'
-  }
-]
+let nextId = 1;
+const usersDB = [];
 
 //allows you to load in jsx
-require('babel/register');
-const React = require('react');
-const underscore = require('underscore');
+// require('babel/register');
+// const React = require('react');
+// const underscore = require('underscore');
 
 const koa = require('koa');
 const logger = require('koa-logger');
@@ -26,6 +16,7 @@ const koaBody = require('koa-body')();
 const views = require('koa-views');
 const serve = require('koa-static');
 const jwt = require('koa-jwt');
+const bcrypt = require('co-bcrypt');
 
 const app = koa();
 
@@ -65,11 +56,11 @@ router
     yield this.render('react')
   })
   .get('/react-iso', function *(next) {
-    const Button = React.createFactory( require('./app/src/js/components/button.jsx') );
-
-    yield this.render('react-iso', {
-      button: React.renderToString(Button({}))
-    })
+    // const Button = React.createFactory( require('./app/src/js/components/button.jsx') );
+    //
+    // yield this.render('react-iso', {
+    //   button: React.renderToString(Button({}))
+    // })
   })
   .get('/json', function *(next) {
     this.body = {
@@ -77,6 +68,26 @@ router
       number: 83,
       isProgrammer: true
     };
+  })
+
+  .get('/signup', function *(next) {
+    yield this.render('signup');
+  })
+  .post('/signup', koaBody, function *(next) {
+    // submitted credentials
+    const username = this.request.body.username;
+    const password = this.request.body.password;
+
+    const salt = yield bcrypt.genSalt(10);
+    const hash = yield bcrypt.hash(password, salt)
+
+    usersDB.push({
+      id: nextId++,
+      username: username,
+      hash: hash
+    });
+
+    this.redirect('/');
   })
 
   // login
@@ -93,27 +104,30 @@ router
     // find user from "database"
     let user = null;
     usersDB.forEach(userRecord => {
-      if (
-        userRecord.username === username
-        && userRecord.password === password
-      ) {
+      if (userRecord.username === username) {
+        // at this point, we've "queried" the db and found a record for this username
         user = userRecord;
       }
-    })
+    });
 
-    if (user) {
-      // user successfully logged in
+    // now check if the submitted password is correct
+    const success = yield bcrypt.compare(password, user.hash)
+    if (success) {
+      // success
 
       // create token
-      const token = jwt.sign(user, 'secret');
+      const token = jwt.sign({
+        id: user.id,
+        username: user.username
+      }, 'secret');
 
       // set token cookie
       this.cookies.set('jwt', token);
 
       // send user to homepage
-      this.redirect('/');
+      this.redirect('/')
     } else {
-      // user login unsuccessful
+      // fail
       yield this.render('login', {
         failed: true
       });

@@ -1,20 +1,67 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Login</title>
+    <title>Koa App - Sign Up</title>
+    <link rel="stylesheet" href="tp/materialize-css/css/materialize.css">
+    <link rel="stylesheet" href="css/bundle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
-  <body>
-    <% if (failed) { %>
-      <p style="color:red">Failed to login</p>
-    <% } %>
-    <form action="/login" method="POST">
-      <p>
-        <input placeholder="username" name="username"><br>
-        <input placeholder="password" name="password">
-      </p>
-      <p>
-        <button>Login</button>
-      </p>
-    </form>
+  <body class="blue-grey darken-2 white-text">
+
+    <nav>
+      <div class="nav-wrapper deep-orange accent-2">
+        <a href="#" class="brand-logo">Koa App</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login">Log In</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login">Log In</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <h1>Log In</h1>
+
+      {% if failed %}
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel red darken-2">
+              Login attempt failed
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+      <div class="row">
+        <form class="col s12" method="POST" action="/login">
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="username_email" name="username_email" type="text" class="validate">
+              <label for="username">Username / Email</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" name="password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button class="btn waves-effect waves-light deep-orange accent-2" type="submit" name="action">Login</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <script src="tp/jquery/jquery.js"></script>
+    <script src="tp/materialize-css/js/materialize.js"></script>
   </body>
 </html>

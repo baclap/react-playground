@@ -1,24 +1,17 @@
 'use strict';
 
-// read: users "db" ;)
-let nextId = 1;
-const usersDB = [];
-
-//allows you to load in jsx
-// require('babel/register');
-// const React = require('react');
-// const underscore = require('underscore');
+// all requires for modules not in node_modules will be relative to here
+require('app-module-path').addPath(__dirname);
 
 const koa = require('koa');
 const logger = require('koa-logger');
-const router = require('koa-router')();
-const koaBody = require('koa-body')();
-const views = require('koa-views');
-const serve = require('koa-static');
 const jwt = require('koa-jwt');
-const bcrypt = require('co-bcrypt');
+const serve = require('koa-static');
+const router = require('app/router');
+const db = require('app/db');
 
 const app = koa();
+app.use(logger());
 
 // all request pass through authentication layer
 // will set this.state.user if the JWT verifies
@@ -29,120 +22,15 @@ app.use(jwt({
   passthrough: true // will allow request to continue through middleware stack with ctx.state.user set to null
 }));
 
-app.use(logger());
-app.use(views('app/views', {
-  map: {
-    html: 'underscore'
-  }
-}));
+// DEBUG
+app.use(function *(next) {
+  console.log(db);
+  console.log(this.state.user)
+  yield next;
+})
 
-// koa-static used to serve static assets in assets directory
 app.use(serve('app/assets'));
-
-// response
-router
-  .get('/', function *(next) {
-    yield this.render('home', {
-      user: this.state.user
-    })
-  })
-  .get('/hello', function *(next) {
-    yield this.render('hello')
-  })
-  .get('/about', function *(next) {
-    this.body = "<!DOCTYPE html><head><title>About</title></head><body>About Us</body></html>";
-  })
-  .get('/react', function *(next) {
-    yield this.render('react')
-  })
-  .get('/react-iso', function *(next) {
-    // const Button = React.createFactory( require('./app/src/js/components/button.jsx') );
-    //
-    // yield this.render('react-iso', {
-    //   button: React.renderToString(Button({}))
-    // })
-  })
-  .get('/json', function *(next) {
-    this.body = {
-      name: 'brett',
-      number: 83,
-      isProgrammer: true
-    };
-  })
-
-  .get('/signup', function *(next) {
-    yield this.render('signup');
-  })
-  .post('/signup', koaBody, function *(next) {
-    // submitted credentials
-    const username = this.request.body.username;
-    const password = this.request.body.password;
-
-    const salt = yield bcrypt.genSalt(10);
-    const hash = yield bcrypt.hash(password, salt)
-
-    usersDB.push({
-      id: nextId++,
-      username: username,
-      hash: hash
-    });
-
-    this.redirect('/');
-  })
-
-  // login
-  .get('/login', function *(next) {
-    yield this.render('login', {
-      failed: false
-    });
-  })
-  .post('/login', koaBody, function *(next) {
-    // submitted credentials
-    const username = this.request.body.username;
-    const password = this.request.body.password;
-
-    // find user from "database"
-    let user = null;
-    usersDB.forEach(userRecord => {
-      if (userRecord.username === username) {
-        // at this point, we've "queried" the db and found a record for this username
-        user = userRecord;
-      }
-    });
-
-    // now check if the submitted password is correct
-    const success = yield bcrypt.compare(password, user.hash)
-    if (success) {
-      // success
-
-      // create token
-      const token = jwt.sign({
-        id: user.id,
-        username: user.username
-      }, 'secret');
-
-      // set token cookie
-      this.cookies.set('jwt', token);
-
-      // send user to homepage
-      this.redirect('/')
-    } else {
-      // fail
-      yield this.render('login', {
-        failed: true
-      });
-    }
-
-  })
-  .get('/logout', function *(next) {
-    // unset token cookie
-    this.cookies.set('jwt', null);
-    this.redirect('/');
-  });
-
-app
-  .use(router.routes())
-  .use(router.allowedMethods());
+app.use(router.routes())
 
 module.exports = app;
 

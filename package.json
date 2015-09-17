@@ -10,8 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "app-module-path": "^1.0.4",
     "babel": "^5.8.21",
     "co-bcrypt": "^1.0.0",
+    "co-views": "^2.0.0",
+    "jquery": "^2.1.4",
     "koa": "^0.21.0",
     "koa-body": "^1.2.1",
     "koa-jwt": "^1.1.1",
@@ -19,10 +22,12 @@
     "koa-router": "^5.1.2",
     "koa-static": "^1.4.9",
     "koa-views": "^3.1.0",
+    "materialize-css": "^0.97.1",
     "react": "^0.13.3",
     "react-color": "^1.0.5",
     "react-router": "^0.13.3",
     "sweetalert": "^1.1.0",
+    "swig": "^1.4.2",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

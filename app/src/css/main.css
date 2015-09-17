@@ -1,3 +1,41 @@
-.test{
-	background-color: black;
+.brand-logo {
+	margin-left: 15px;
+}
+
+/* FORM INPUTS */
+
+/* label color */
+.input-field label {
+	color: #eee;
+}
+/* label focus color */
+.input-field input[type=text]:focus + label,
+.input-field input[type=email]:focus + label,
+.input-field input[type=password]:focus + label {
+	color: #fff;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus,
+.input-field input[type=email]:focus,
+.input-field input[type=password]:focus {
+	border-bottom: 1px solid #fff;
+	box-shadow: 0 1px 0 0 #fff;
+}
+/* valid color */
+.input-field input[type=text].valid,
+.input-field input[type=email].valid,
+.input-field input[type=password].valid {
+	border-bottom: 1px solid #fff;
+	box-shadow: 0 1px 0 0 #fff;
+}
+/* invalid color */
+.input-field input[type=text].invalid,
+.input-field input[type=email].invalid,
+.input-field input[type=password].invalid {
+	border-bottom: 1px solid #d32f2f; /* red darken-2 */
+	box-shadow: 0 1px 0 0 #d32f2f;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+	color: #fff;
 }

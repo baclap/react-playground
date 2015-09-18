@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Koa App - {{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="tp/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="tp/materialize-css/css/materialize.css">
+    <link rel="stylesheet" href="css/bundle.css">
+  </head>
+  <body class="blue-grey darken-2 white-text">
+
+    <nav>
+      <div class="nav-wrapper deep-orange accent-2">
+        <a href="/" class="brand-logo">Koa App</a>
+        <a href="#" data-activates="mobile-sidebar" class="button-collapse"><i class="fa fa-bars"></i></a>
+        {% if user %}
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/profile/{{ user.username }}">My Profile</a></li>
+          <li><a href="/logout">Log Out</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-sidebar">
+          <li><a href="/profile/{{ user.username }}">My Profile</a></li>
+          <li><a href="/logout">Log Out</a></li>
+        </ul>
+        {% else %}
+        <ul class="right hide-on-med-and-down">
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login">Log In</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-sidebar">
+          <li><a href="/signup">Sign Up</a></li>
+          <li><a href="/login">Log In</a></li>
+        </ul>
+        {% endif %}
+      </div>
+    </nav>
+
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+
+    <script src="tp/jquery/jquery.js"></script>
+    <script src="tp/materialize-css/js/materialize.js"></script>
+    <script src="js/bundle.js"></script>
+  </body>
+</html>

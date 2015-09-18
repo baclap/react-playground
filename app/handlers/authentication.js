@@ -37,7 +37,6 @@ module.exports = {
       // now check if the submitted password is correct
       const success = yield bcrypt.compare(password, user.hash)
       if (success) {
-        console.log('success');
         // create token
         const token = jwt.sign({
           id: user.id,
@@ -64,5 +63,9 @@ module.exports = {
         failed: true
       });
     }
+  },
+  doLogout: function *(next) {
+    this.cookies.set('jwt', null);
+    this.redirect('/');
   }
 };

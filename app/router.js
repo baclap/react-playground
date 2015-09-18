@@ -17,3 +17,4 @@ module.exports = router
 
 .get('/login', authentication.showLogin)
 .post('/login', parse, authentication.doLogin)
+.get('/logout', authentication.doLogout)

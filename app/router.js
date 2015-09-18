@@ -7,6 +7,7 @@ const parse = require('koa-body')();
 const index = require('app/handlers/index');
 const registration = require('app/handlers/registration');
 const authentication = require('app/handlers/authentication');
+const user = require('app/handlers/user');
 
 module.exports = router
 
@@ -18,3 +19,5 @@ module.exports = router
 .get('/login', authentication.showLogin)
 .post('/login', parse, authentication.doLogin)
 .get('/logout', authentication.doLogout)
+
+.get('/profile/:username', user.showProfile)

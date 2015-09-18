@@ -3,16 +3,15 @@
   <head>
     <title>Koa App - {{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="tp/font-awesome/css/font-awesome.css">
-    <link rel="stylesheet" href="tp/materialize-css/css/materialize.css">
-    <link rel="stylesheet" href="css/bundle.css">
+    <link rel="stylesheet" href="/tp/materialize-css/css/materialize.min.css">
+    <link rel="stylesheet" href="/css/bundle.min.css">
   </head>
   <body class="blue-grey darken-2 white-text">
 
     <nav>
       <div class="nav-wrapper deep-orange accent-2">
         <a href="/" class="brand-logo">Koa App</a>
-        <a href="#" data-activates="mobile-sidebar" class="button-collapse"><i class="fa fa-bars"></i></a>
+        <a href="#" data-activates="mobile-sidebar" class="button-collapse"><i class="mdi-navigation-menu right"></i></a>
         {% if user %}
         <ul class="right hide-on-med-and-down">
           <li><a href="/profile/{{ user.username }}">My Profile</a></li>
@@ -39,8 +38,8 @@
       {% block content %}{% endblock %}
     </div>
 
-    <script src="tp/jquery/jquery.js"></script>
-    <script src="tp/materialize-css/js/materialize.js"></script>
-    <script src="js/bundle.js"></script>
+    <script src="/tp/jquery/jquery.min.js"></script>
+    <script src="/tp/materialize-css/js/materialize.min.js"></script>
+    <script src="/js/bundle.min.js"></script>
   </body>
 </html>

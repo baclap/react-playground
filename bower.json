@@ -1,0 +1,26 @@
+{
+  "name": "koa-app",
+  "version": "0.0.0",
+  "homepage": "https://github.com/baclap/koa-app",
+  "authors": [
+    "baclap <clapperbrett@gmail.com>"
+  ],
+  "main": "app.js",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "Materialize": "materialize#~0.97.1"
+  }
+}

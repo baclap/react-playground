@@ -1,6 +1,6 @@
 {% extends 'templates/base.html' %}
 
-{% block title %}{{ profile.username }} - Koa App{% endblock %}
+{% block title %}{{ profile.username }}{% parent %}{% endblock %}
 
 {% block content %}
 <h1>{{ profile.username }}'s Profile</h1>

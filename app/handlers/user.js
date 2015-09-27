@@ -3,7 +3,6 @@
 const render = require('app/render');
 const bcrypt = require('co-bcrypt');
 const jwt = require('koa-jwt');
-const db = require('app/db');
 
 module.exports = {
   showProfile: function *(next) {

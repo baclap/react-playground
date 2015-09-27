@@ -1,8 +1,6 @@
 # Koa App
 
-## Launching using Docker
-`docker-compose up`
-
-## Docker Depenencies
-1. [Docker](https://github.com/docker/docker)
-2. [Docker Compose](https://github.com/docker/compose)
+1. install [rethinkdb](https://rethinkdb.com/)
+1. create a database named `koa_app`
+1. run `rethinkdb` from project's root directory to start the db
+1. run `npm start` from project's root directory to start app server

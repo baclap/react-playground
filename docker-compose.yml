@@ -1,7 +1,0 @@
-app:
-  build: .
-  ports:
-  - "4000:4000"
-  environment:
-    PORT: 9999
-  

@@ -3,7 +3,8 @@
 const render = require('app/render');
 const bcrypt = require('co-bcrypt');
 const jwt = require('koa-jwt');
-const db = require('app/db');
+const User = require('app/models/user');
+const r = require('thinky')().r;
 
 module.exports = {
   showLogin: function *(next) {
@@ -14,26 +15,18 @@ module.exports = {
     const username_email = this.request.body.username_email;
     const password = this.request.body.password;
 
-    // db lookup
-    let user = null;
-    const lookupByEmail = (username_email.indexOf('@') != -1);
-    for (let i in db.user) {
-      const userRecord = db.user[i];
-      if (lookupByEmail) {
-        if (userRecord.email = username_email) {
-          user = userRecord;
-          break;
-        }
-      } else {
-        if (userRecord.username = username_email) {
-          user = userRecord;
-          break;
-        }
-      }
+    // fetch user by username or email
+    let filterField = 'username';
+    if (username_email.indexOf('@') != -1) {
+      filterField = 'email';
     }
+    const users = yield User.filter(
+      r.row(filterField).match('(?i)^' + username_email + '$')
+    ).run();
 
     let error = false;
-    if (user) {
+    if (users.length === 1) {
+      const user = users[0];
       // now check if the submitted password is correct
       const success = yield bcrypt.compare(password, user.hash)
       if (success) {
@@ -53,7 +46,7 @@ module.exports = {
         error = "Incorrect password";
       }
     } else {
-      error = "User not found";
+      error = "User not found"; // or somehow there were more than 1 found...
     }
 
     if (error) {

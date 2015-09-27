@@ -8,7 +8,6 @@ const logger = require('koa-logger');
 const jwt = require('koa-jwt');
 const serve = require('koa-static');
 const router = require('app/router');
-const db = require('app/db');
 
 const app = koa();
 app.use(logger());
@@ -21,13 +20,6 @@ app.use(jwt({
   cookie: 'jwt', // the name of the cookie where auth token is saved
   passthrough: true // will allow request to continue through middleware stack with ctx.state.user set to null
 }));
-
-// DEBUG
-app.use(function *(next) {
-  console.log(db);
-  console.log(this.state.user)
-  yield next;
-})
 
 app.use(serve('app/assets'));
 app.use(router.routes())

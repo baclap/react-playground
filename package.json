@@ -21,7 +21,8 @@
     "koa-router": "^5.1.2",
     "koa-static": "^1.4.9",
     "react": "^0.13.3",
-    "swig": "^1.4.2"
+    "swig": "^1.4.2",
+    "thinky": "^2.1.8"
   },
   "devDependencies": {
     "babelify": "^6.1.3",

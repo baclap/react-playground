@@ -8,6 +8,7 @@ const index = require('app/handlers/index');
 const registration = require('app/handlers/registration');
 const authentication = require('app/handlers/authentication');
 const user = require('app/handlers/user');
+const post = require('app/handlers/post');
 
 module.exports = router
 
@@ -19,5 +20,8 @@ module.exports = router
 .get('/login', authentication.showLogin)
 .post('/login', parse, authentication.doLogin)
 .get('/logout', authentication.doLogout)
+
+.get('/writer', post.showWriter)
+.post('/writer', post.doSavePost)
 
 .get('/profile/:username', user.showProfile)

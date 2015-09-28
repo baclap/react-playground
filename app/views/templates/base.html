@@ -15,10 +15,12 @@
         {% if user %}
         <ul class="right hide-on-med-and-down">
           <li><a href="/profile/{{ user.username }}">My Profile</a></li>
+          <li><a href="/writer">Write Post</a></li>
           <li><a href="/logout">Log Out</a></li>
         </ul>
         <ul class="side-nav" id="mobile-sidebar">
           <li><a href="/profile/{{ user.username }}">My Profile</a></li>
+          <li><a href="/writer">Write Post</a></li>
           <li><a href="/logout">Log Out</a></li>
         </ul>
         {% else %}

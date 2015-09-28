@@ -1,0 +1,40 @@
+{% extends 'templates/base.html' %}
+
+{% block title %}Write Post{% parent %}{% endblock %}
+
+{% block content %}
+<h1>Writer</h1>
+<div class="row">
+  <form class="col s12" method="POST" action="/writer">
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="title" name="title" type="text">
+        <label for="title">Post Title</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="publish_date" name="publish_date" type="date" class="datepicker">
+        <label for="publish_date">Publish Date</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <textarea id="content" name="content" class="materialize-textarea"></textarea>
+        <label for="content">Post Content</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="unpublished" name="unpublished" type="checkbox" checked="checked">
+        <label for="unpublished">Force Unpublished (keeps post hidden even after publish date)</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12">
+        <button class="btn waves-effect waves-light deep-orange accent-2" type="submit" name="action">Save</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

@@ -8,6 +8,7 @@ const logger = require('koa-logger');
 const jwt = require('koa-jwt');
 const serve = require('koa-static');
 const router = require('app/router');
+const render = require('app/middleware/render');
 
 const app = koa();
 app.use(logger());
@@ -22,7 +23,8 @@ app.use(jwt({
 }));
 
 app.use(serve('app/assets'));
-app.use(router.routes())
+app.use(render);
+app.use(router.routes());
 
 module.exports = app;
 

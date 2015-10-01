@@ -1,6 +1,5 @@
 'use strict';
 
-const render = require('app/render');
 const bcrypt = require('co-bcrypt');
 const jwt = require('koa-jwt');
 const User = require('app/models/user');
@@ -8,7 +7,7 @@ const r = require('thinky')().r;
 
 module.exports = {
   showLogin: function *(next) {
-    this.body = yield render('login');
+    this.body = yield this.render('login');
   },
   doLogin: function *(next) {
     // submitted credentials
@@ -52,7 +51,7 @@ module.exports = {
     if (error) {
       // ensure token is not set... might not be needed, will think on it
       this.cookies.set('jwt', null);
-      this.body = yield render('login', {
+      this.body = yield this.render('login', {
         failed: true
       });
     }

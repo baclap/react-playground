@@ -1,6 +1,5 @@
 'use strict';
 
-const render = require('app/render');
 const bcrypt = require('co-bcrypt');
 const User = require('app/models/user');
 const r = require('thinky')().r;
@@ -9,7 +8,7 @@ let nextId = 1;
 
 module.exports = {
   showSignup: function *(next) {
-    this.body = yield render('signup');
+    this.body = yield this.render('signup');
   },
   doSignup: function *(next) {
     // submitted credentials
@@ -27,7 +26,7 @@ module.exports = {
       // dupe found
       // TODO: better error handling
       console.log('Error: dupe found');
-      this.body = yield render('signup');
+      this.body = yield this.render('signup');
     } else {
       // hash password and save user
       const salt = yield bcrypt.genSalt(10);

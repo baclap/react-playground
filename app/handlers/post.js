@@ -1,6 +1,5 @@
 'use strict';
 
-const render = require('app/render');
 const Post = require('app/models/post');
 
 // post
@@ -9,9 +8,7 @@ module.exports = {
     if (!this.state.user) {
       this.response.status = 403;
     } else {
-      this.body = yield render('writer', {
-        user: this.state.user
-      })
+      this.body = yield this.render('writer')
     }
   },
   doSavePost: function *(next) {

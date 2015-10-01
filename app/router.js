@@ -22,6 +22,6 @@ module.exports = router
 .get('/logout', authentication.doLogout)
 
 .get('/writer', post.showWriter)
-.post('/writer', post.doSavePost)
+.post('/writer', parse, post.doSavePost)
 
 .get('/profile/:username', user.showProfile)

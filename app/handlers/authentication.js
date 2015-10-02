@@ -23,7 +23,6 @@ module.exports = {
       r.row(filterField).match('(?i)^' + username_email + '$')
     ).run();
 
-    let error = false;
     if (users.length === 1) {
       const user = users[0];
       // now check if the submitted password is correct
@@ -40,21 +39,20 @@ module.exports = {
         this.cookies.set('jwt', token);
 
         // send user to homepage
-        this.redirect('/')
+        this.redirect('/');
+        return;
       } else {
-        error = "Incorrect password";
+        this.flash.errors.push('Incorrect password');
       }
     } else {
-      error = "User not found"; // or somehow there were more than 1 found...
+      this.flash.errors.push('User not found'); // or somehow there were more than 1 found...
     }
 
-    if (error) {
-      // ensure token is not set... might not be needed, will think on it
-      this.cookies.set('jwt', null);
-      this.body = yield this.render('login', {
-        failed: true
-      });
-    }
+    // ensure token is not set... might not be needed, will think on it
+    this.cookies.set('jwt', null);
+    this.body = yield this.render('login', {
+      failed: true
+    });
   },
   doLogout: function *(next) {
     this.cookies.set('jwt', null);

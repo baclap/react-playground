@@ -4,4 +4,8 @@
 
 {% block content %}
 <h1>Home</h1>
+{% for post in posts %}
+<h2>{{ post.title }}</h2>
+<div>{{ post.content }}</div>
+{% endfor %}
 {% endblock %}

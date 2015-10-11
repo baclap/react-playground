@@ -1,4 +1,4 @@
 node_modules/
-app/assets/
+public/
 npm-debug.log
 rethinkdb_data/

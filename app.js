@@ -22,7 +22,7 @@ app.use(jwt({
   passthrough: true // will allow request to continue through middleware stack with ctx.state.user set to null
 }));
 
-app.use(serve('app/assets'));
+app.use(serve('public'));
 app.use(render);
 app.use(router.routes());
 

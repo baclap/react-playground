@@ -33,17 +33,17 @@ gulp.task('watch', function() {
 
   //concat css
   gulp.watch(
-    ['app/src/css/**/*.css'], ['bundle-css']
+    ['app/assets/css/**/*.css'], ['bundle-css']
   )
 });
 
 gulp.task('bundle-css', function(){
-  return gulp.src('app/src/css/**/*.css')
+  return gulp.src('app/assets/css/**/*.css')
     .pipe(concat('bundle.css'))
-    .pipe(gulp.dest('app/assets/css'))
+    .pipe(gulp.dest('public/css'))
     .pipe(rename('bundle.min.css'))
     .pipe(minifyCss())
-    .pipe(gulp.dest('app/assets/css'));
+    .pipe(gulp.dest('public/css'));
 });
 
 // run mocha test in the test directory
@@ -85,7 +85,7 @@ gulp.task('watchify', function() {
 
 const getBrowserifyInstance = function() {
   // create browserify instance
-  const b = browserify('app/src/js/app.jsx', {
+  const b = browserify('app/assets/js/app.jsx', {
     debug: true,
     extensions: ['.jsx'],
 
@@ -108,11 +108,11 @@ const bundleBrowserify = function(b) {
       }
     })
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest('app/assets/js'))
+    .pipe(gulp.dest('public/js'))
     .pipe(rename('bundle.min.js'))
     .pipe(buffer())
     .pipe(uglify())
-    .pipe(gulp.dest('app/assets/js'));
+    .pipe(gulp.dest('public/js'));
 };
 
 // running gulp (or in our ES6 case, node --harmony `which gulp`) will run the

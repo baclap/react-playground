@@ -5,7 +5,7 @@ const r = require('thinky')().r;
 
 module.exports = {
   showIndex: function *(next) {
-    const results = yield Post.run();
+    const results = yield Post.orderBy({index: r.desc('date')}).run();
     this.body = yield this.render('index',{
       posts: results
     });

@@ -50,9 +50,7 @@ module.exports = {
 
     // ensure token is not set... might not be needed, will think on it
     this.cookies.set('jwt', null);
-    this.body = yield this.render('login', {
-      failed: true
-    });
+    this.body = yield this.render('login');
   },
   doLogout: function *(next) {
     this.cookies.set('jwt', null);

@@ -13,6 +13,7 @@ const concat = require('gulp-concat');
 const rename = require('gulp-rename');
 const uglify = require('gulp-uglify');
 const minifyCss = require('gulp-minify-css');
+const less = require('gulp-less');
 
 // this not only starts the app but will also monitor for file changes and
 // restart the app when changes are detected
@@ -33,12 +34,15 @@ gulp.task('watch', function() {
 
   //concat css
   gulp.watch(
-    ['app/assets/css/**/*.css'], ['bundle-css']
+    ['app/assets/less/**/*.less'], ['bundle-css']
   )
 });
 
 gulp.task('bundle-css', function(){
-  return gulp.src('app/assets/css/**/*.css')
+  return gulp.src(['app/assets/less/**/*.less', '!app/assets/less/mixins/*.less'])
+    .pipe(less({
+      paths: ['app/assets/less/mixins']
+    }))
     .pipe(concat('bundle.css'))
     .pipe(gulp.dest('public/css'))
     .pipe(rename('bundle.min.css'))

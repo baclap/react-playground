@@ -3,6 +3,7 @@
 import { React, Base } from './components/base'
 import { render, findDOMNode } from 'react-dom'
 import { Router, Route, Link } from 'react-router'
+import classnames from 'classnames'
 
 class Menu extends Base {
     render() {
@@ -17,7 +18,10 @@ class Menu extends Base {
 class MenuItem extends Base {
     render() {
         return (
-            <li className="menu-item">
+            <li className={classnames([
+                    'menu-item',
+                    {'active': this.props.to == this.props.currentPath}
+                ])}>
                 <Link to={this.props.to}>{this.props.children}</Link>
             </li>
         )
@@ -29,8 +33,12 @@ class App extends Base {
         return (
             <div className="app-body">
                 <Menu>
-                    <MenuItem to="/example-a">Example A</MenuItem>
-                    <MenuItem to="/example-b">Example B</MenuItem>
+                    <MenuItem to="/example-a" currentPath={this.props.location.pathname}>
+                        Example A
+                    </MenuItem>
+                    <MenuItem to="/example-b" currentPath={this.props.location.pathname}>
+                        Example B
+                    </MenuItem>
                 </Menu>
                 <p>
                     {this.props.children}

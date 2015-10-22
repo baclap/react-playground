@@ -2,8 +2,6 @@
 
 const gulp = require('gulp');
 const nodemon = require('gulp-nodemon');
-const mocha = require('gulp-mocha');
-const exit = require('gulp-exit');
 const browserify = require('browserify');
 const watchify = require('watchify');
 const babelify = require('babelify');
@@ -26,42 +24,22 @@ gulp.task('nodemon', function() {
 
 // run mocha test when changes detected in files
 gulp.task('watch', function() {
-  // gulp's built in watch function
-  gulp.watch(
-    ['**/*.{html,js,jsx}', '!node_modules/**'], // blurbs of files to watch
-    ['mocha'] // tasks to run when the above files change
-  );
-
   //concat css
   gulp.watch(
-    ['app/assets/less/**/*.less'], ['bundle-css']
+    ['assets/less/**/*.less'], ['bundle-css']
   )
 });
 
 gulp.task('bundle-css', function(){
-  return gulp.src(['app/assets/less/**/*.less', '!app/assets/less/mixins/*.less'])
+  return gulp.src(['assets/less/**/*.less', '!assets/less/mixins/*.less'])
     .pipe(less({
-      paths: ['app/assets/less/mixins']
+      paths: ['assets/less/mixins']
     }))
     .pipe(concat('bundle.css'))
     .pipe(gulp.dest('public/css'))
     .pipe(rename('bundle.min.css'))
     .pipe(minifyCss())
     .pipe(gulp.dest('public/css'));
-});
-
-// run mocha test in the test directory
-gulp.task('mocha', function() {
-  //process.env.PORT = 4001;
-  // return is important here... http://stackoverflow.com/a/21700789
-  return gulp.src(['app/test/*.js'])
-    .pipe(mocha({reporter: 'nyan'})); // nyan reporter is dope lol
-});
-
-// gulp task which will run mocha test one time then exit
-// used by our `npm test` script in package.json
-gulp.task('test-once', function() {
-  gulp.tasks.mocha.fn().pipe(exit());
 });
 
 // one-off browserify task which is handy when debugging
@@ -89,7 +67,7 @@ gulp.task('watchify', function() {
 
 const getBrowserifyInstance = function() {
   // create browserify instance
-  const b = browserify('app/assets/js/app.jsx', {
+  const b = browserify('assets/js/app.jsx', {
     debug: true,
     extensions: ['.jsx'],
 
@@ -121,4 +99,4 @@ const bundleBrowserify = function(b) {
 
 // running gulp (or in our ES6 case, node --harmony `which gulp`) will run the
 // task in this array
-gulp.task('default', ['nodemon', 'bundle-css', 'mocha', 'watch', 'watchify']);
+gulp.task('default', ['nodemon', 'bundle-css', 'watch', 'watchify']);

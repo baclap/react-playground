@@ -20,7 +20,6 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "~2.1.4",
-    "Materialize": "materialize#~0.97.1"
+    "jquery": "~2.1.4"
   }
 }

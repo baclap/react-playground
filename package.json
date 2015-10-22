@@ -1,43 +1,28 @@
 {
-  "name": "koa-app",
+  "name": "react-examples",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node --harmony `which gulp`",
-    "test": "node --harmony `which gulp` test-once"
+    "start": "node --harmony `which gulp`"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "app-module-path": "^1.0.4",
-    "babel": "^5.8.21",
-    "co-bcrypt": "^1.0.0",
-    "co-views": "^2.0.0",
     "koa": "^0.21.0",
-    "koa-body": "^1.2.1",
-    "koa-jwt": "^1.1.1",
     "koa-logger": "^1.2.2",
-    "koa-router": "^5.1.2",
-    "koa-static": "^1.4.9",
-    "react": "^0.13.3",
-    "swig": "^1.4.2",
-    "thinky": "^2.1.8"
+    "koa-static": "^1.4.9"
   },
   "devDependencies": {
     "babelify": "^6.1.3",
     "browserify": "^11.0.1",
-    "chai": "^3.2.0",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
-    "gulp-exit": "0.0.2",
     "gulp-less": "^3.0.3",
     "gulp-minify-css": "^1.2.0",
-    "gulp-mocha": "^2.1.3",
     "gulp-nodemon": "^2.0.3",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.2.0",
-    "supertest": "^1.0.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.3.1"

@@ -2,6 +2,7 @@
 
 const koa = require('koa');
 const logger = require('koa-logger');
+const serve = require('koa-static');
 
 const app = koa();
 app.use(logger());

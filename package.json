@@ -9,9 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "history": "^1.12.5",
     "koa": "^0.21.0",
     "koa-logger": "^1.2.2",
-    "koa-static": "^1.4.9"
+    "koa-static": "^1.4.9",
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "react-router": "^1.0.0-rc3"
   },
   "devDependencies": {
     "babelify": "^6.1.3",

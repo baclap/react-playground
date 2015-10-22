@@ -1,12 +1,26 @@
 'use strict';
 
 import { React, Base } from './components/base'
-import { render } from 'react-dom'
+import { render, findDOMNode } from 'react-dom'
 import { Router, Route, Link } from 'react-router'
 
-class Hello extends Base {
+class Menu extends Base {
     render() {
-        return <p>hello world</p>
+        return (
+            <ul className="menu">
+                {this.props.children}
+            </ul>
+        )
+    }
+}
+
+class MenuItem extends Base {
+    render() {
+        return (
+            <li className="menu-item">
+                <Link to={this.props.to}>{this.props.children}</Link>
+            </li>
+        )
     }
 }
 
@@ -14,10 +28,10 @@ class App extends Base {
     render() {
         return (
             <div className="app-body">
-                <ul>
-                    <li><Link to="/example-a">Example A</Link></li>
-                    <li><Link to="/example-b">Example B</Link></li>
-                </ul>
+                <Menu>
+                    <MenuItem to="/example-a">Example A</MenuItem>
+                    <MenuItem to="/example-b">Example B</MenuItem>
+                </Menu>
                 <p>
                     {this.props.children}
                 </p>
@@ -27,9 +41,30 @@ class App extends Base {
 }
 
 class ExampleA extends Base {
+    constructor(props) {
+        super(props);
+        this.state = {
+            count: 1
+        }
+    }
+    componentDidMount() {
+        console.log('A is mounting...')
+        const link = findDOMNode(this.refs.link);
+        $(link).button()
+    }
+    componentWillUnmount() {
+        console.log('A is unmounting...')
+    }
+    handleClick(e) {
+        e.preventDefault();
+        let newCount = this.state.count + 1;
+        this.setState({
+            count: newCount
+        })
+    }
     render() {
         return (
-            <span>hello world</span>
+            <a href="#" ref="link" onClick={this.handleClick}>{this.state.count}</a>
         )
     }
 }
@@ -42,13 +77,11 @@ class ExampleB extends Base {
     }
 }
 
-// render((
-//     <Router>
-//         <Route path="/" component={App}>
-//             <Route path="example-a" component={ExampleA} />
-//             <Route path="example-b" component={ExampleB} />
-//         </Route>
-//     </Router>
-// ), document.querySelector('#app'))
-
-render(<Hello />, document.querySelector('#app'));
+render((
+    <Router>
+        <Route path="/" component={App}>
+            <Route path="example-a" component={ExampleA} />
+            <Route path="example-b" component={ExampleB} />
+        </Route>
+    </Router>
+), document.querySelector('#app'))
